@@ -1,0 +1,65 @@
+// Source : https://leetcode.com/explore/interview/card/top-interview-questions-easy/93/linked-list/603/
+// Date   : 25-02-2021
+
+/********************************************************************************** 
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+Follow up: Could you do this in one pass?
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+
+Example 2:
+
+Input: head = [1], n = 1
+Output: []
+
+Example 3:
+
+Input: head = [1,2], n = 1
+Output: [1]
+ 
+
+Constraints:
+
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+
+**********************************************************************************/
+
+Solution:
+
+
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        
+        
+        ListNode* dummy = new ListNode(0,head);   // dummy node to handle the corner cases 
+                
+        ListNode* p = dummy;
+        ListNode* q = dummy;
+        for(int i=0;i<=n;i++)
+        {
+            if(q)                        
+            q=q->next;
+        }
+        while(q)
+        {
+            p=p->next;
+            q=q->next;
+        }
+
+        ListNode* temp  = p->next;
+        p->next = p->next->next;
+        delete temp;
+        
+        return dummy->next;       // this is imp.(return head might give wrong ans. for. e.g. [1,2] n=2)
+    } 
+    
+ /********************************************************************************/ 

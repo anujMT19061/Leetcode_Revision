@@ -1,0 +1,89 @@
+// Source : https://leetcode.com/explore/interview/card/top-interview-questions-easy/93/linked-list/772/
+// Date   : 25-02-2021
+
+/********************************************************************************** 
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+**********************************************************************************/
+
+Solution:
+
+
+    ListNode* reverseList(ListNode* rev)
+    {
+        ListNode *p = NULL;
+        ListNode* q = NULL;
+        
+        while(rev)
+        {
+            if(!p)
+            {
+                p = rev;
+                rev = rev->next;
+                p->next = NULL;
+                q = p;
+            }
+            else
+            {
+                p=rev;
+                rev = rev->next;
+                p->next = q;
+                q = p;
+            }   
+        }
+        return q;
+        
+    }
+    
+    ListNode* midPoint(ListNode* list)
+    {
+        ListNode* p = list;
+        ListNode* q = list;
+        while(q && q->next)
+        {
+            p = p->next;
+            q = q->next->next;
+        }
+        return p;
+    }
+       
+    bool isPalindrome(ListNode* head) {
+        
+        if(!head || !head->next)
+            return true;
+    
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        head = dummy;
+        ListNode* mid = midPoint(head);
+        ListNode* l2 = mid->next;
+        
+        ListNode* l = reverseList(l2);
+        mid->next = NULL;
+        head = head->next;
+        
+        while(head && l)
+        {
+            if(l->val!=head->val)
+                return false;
+            head = head->next;
+            l = l->next;
+        }
+        
+        return true;
+        
+        
+    }
+    
+ /********************************************************************************/ 
